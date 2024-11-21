@@ -23,8 +23,8 @@ function Header(){
             Quick Chat
          </div>
       <div className="app-user-profile">
-         <div className="logged-user-name">{getFullname()}</div>
-         <div className="logged-user-profile-pic">{getInitials()}</div>
+         <div className="logged-user-name">{getFullname() || "Guest User"}</div>
+         <div className="logged-user-profile-pic">{getInitials() || "GU"}</div>
       </div>
    </div>
 

@@ -4,14 +4,15 @@ import { getLoggedUser, getAllUsers } from "./../apiCalls/users";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoader, showLoader } from "../redux/loaderSlice";
 import toast from "react-hot-toast";
-import { setAllUsers, setUser } from "../redux/usersSlice";
+import { setAllUsers, setUser, setAllChats } from "../redux/usersSlice";
+import { getAllChats } from "../apiCalls/chat";
 
 function ProtectedRoute({children}){
 
+   //const { user } = useSelector(state => state.useReducer);
    const navigate = useNavigate()
-   const { user } = useSelector(state => state.useReducer);
-
    const dispatch = useDispatch();
+
 
    const getLoggedInUser = async () =>{
 
@@ -25,7 +26,7 @@ function ProtectedRoute({children}){
             dispatch(setUser(response.data));
          }else{
             toast.error(response.message);
-            window.location.href='./login'
+            navigate('/login');
          }
       } catch (error) {
          dispatch(hideLoader());
@@ -34,7 +35,7 @@ function ProtectedRoute({children}){
       }
    }
 
-   const getAlltheUsers = async () =>{
+   const getAllTheUsers = async () =>{
       let response = null;
       try {
          dispatch(showLoader());
@@ -44,7 +45,24 @@ function ProtectedRoute({children}){
             dispatch(setAllUsers(response.data));
          }else{
             toast.error(response.message);
-            window.location.href='./login'
+            navigate('/login');
+         }
+      } catch (error) {
+         dispatch(hideLoader());
+         navigate('/login');
+      }
+   }
+
+   const getCurrentUserChats = async() =>{
+      try {
+         dispatch(showLoader());
+         const response = await getAllChats();
+         dispatch(hideLoader());
+         if(response.success){
+            dispatch(setAllChats(response.data))
+         }else{
+            toast.error(response.message);
+            navigate('/login');
          }
       } catch (error) {
          dispatch(hideLoader());
@@ -55,7 +73,8 @@ function ProtectedRoute({children}){
    useEffect(()=>{
       if(localStorage.getItem('token')){
          getLoggedInUser();
-         getAlltheUsers ();
+         getAllTheUsers ();
+         getCurrentUserChats();
       }else{
          navigate('/login')
       }
