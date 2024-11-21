@@ -1,0 +1,7 @@
+{
+   "editor.defaultFormatter": "esbenp.prettier-vscode",
+   "editor.formatOnSave": true,
+   "eslint.codeActionsOnSave.rules": null,
+   "cSpell": false,
+   "eslint.lintTask.options": "."
+}
