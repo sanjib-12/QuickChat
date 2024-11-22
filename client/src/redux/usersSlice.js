@@ -5,7 +5,8 @@ const usersSlice = createSlice({
    initialState: {
       user : null, 
       allUsers: [],
-      allChats: []
+      allChats: [],
+      selectedChat: null
    },
    reducers: {
       setUser: (state, action) => {
@@ -16,9 +17,12 @@ const usersSlice = createSlice({
       },
       setAllChats : (state, action) => {
          state.allChats = action.payload;
+      },
+      setSelectedChat : (state, action) => {
+         state.selectedChat = action.payload;
       }
    }
 });
 
-export const { setUser, setAllUsers, setAllChats } = usersSlice.actions;
+export const { setUser, setAllUsers, setAllChats, setSelectedChat } = usersSlice.actions;
 export default usersSlice.reducer;
