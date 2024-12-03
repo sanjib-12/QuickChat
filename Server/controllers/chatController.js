@@ -33,6 +33,7 @@ router.get('/get-all-chats', authMiddleware, async (req, res) => {
          members: { $in: req.body.userId },
       })
          .populate('members')
+         .populate('lastMessage')
          .sort({ updatedAt: -1 });
 
       // response with the success and the chats information.
